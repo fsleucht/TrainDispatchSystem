@@ -11,7 +11,7 @@ public class TrainDeparture {
   private final LocalTime departureTime;
   private final String line;
   private final String destination;
-  private int track;
+  private int track = -1;
   private LocalTime delay = LocalTime.of(0, 0);
 
   /**
@@ -57,8 +57,18 @@ public class TrainDeparture {
     return delay;
   }
 
-  public static void setCurrentTime(LocalTime currentTime) {
-    TrainDeparture.currentTime = currentTime;
+  /**
+   * Methode that sets the current time. Time can not be set before the current time.
+   *
+   * @param hours number of hours
+   * @param minutes number of minutes
+   */
+  public static void setCurrentTime(int hours, int minutes) {
+    LocalTime setTime = LocalTime.of(hours, minutes);
+    if (setTime.isBefore(currentTime)) {
+      throw new IllegalArgumentException("Time cannot be set before the current time");
+    }
+    currentTime = setTime;
   }
 
   public void setTrack(int track) {
