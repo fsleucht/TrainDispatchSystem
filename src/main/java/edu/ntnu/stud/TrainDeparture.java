@@ -79,4 +79,14 @@ public class TrainDeparture {
     this.delay = delay;
   }
 
+  public String toString() {
+    return "TrainDeparture{" +
+        "trainNumber=" + trainNumber +
+        ", departureTime=" + departureTime +
+        ", line='" + line + '\'' +
+        ", destination='" + destination + '\'' +
+        ", track=" + track +
+        ", delay=" + delay +
+        '}';
+  }
 }
