@@ -19,6 +19,7 @@ public class TrainDeparture {
   private final String destination;
   private int track = -1;
   private LocalTime delay = LocalTime.of(0, 0);
+  private LocalTime newDepartureTime;
 
   /**
    * Constructs a TrainDeparture object.
@@ -60,6 +61,7 @@ public class TrainDeparture {
     this.departureTime = setTime;
     this.line = line;
     this.destination = destination;
+    this.newDepartureTime = departureTime;
   }
 
   public static LocalTime getCurrentTime() {
@@ -88,6 +90,10 @@ public class TrainDeparture {
 
   public LocalTime getDelay() {
     return delay;
+  }
+
+  public LocalTime getNewDepartureTime() {
+    return newDepartureTime;
   }
 
   /**
@@ -136,35 +142,6 @@ public class TrainDeparture {
           + "minutes must be between 0 and 59");
     }
     this.delay = LocalTime.of(hours, minutes);
-  }
-
-  /**
-   * Simple toString methode that returns a String representation of the TrainDeparture object.
-   *
-   * @return String representation of the TrainDeparture object.
-   */
-  public String toString() {
-    if (this.departureTime.isBefore(currentTime)) {
-      return null;
-    }
-
-    if (track == -1) {
-      return "TrainDeparture{"
-          + "trainNumber=" + trainNumber
-          + ", departureTime=" + departureTime
-          + ", line='" + line + '\''
-          + ", track="
-          + ", destination='" + destination + '\''
-          + '}';
-    }
-
-    return "TrainDeparture{"
-        + "trainNumber=" + trainNumber
-        + ", departureTime=" + departureTime
-        + ", line='" + line + '\''
-        + ", destination='" + destination + '\''
-        + ", track=" + track
-        + ", delay=" + delay
-        + '}';
+    this.newDepartureTime = this.departureTime.plusHours(hours).plusMinutes(minutes);
   }
 }
