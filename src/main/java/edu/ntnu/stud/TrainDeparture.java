@@ -61,7 +61,7 @@ public class TrainDeparture {
     this.departureTime = setTime;
     this.line = line;
     this.destination = destination;
-    this.newDepartureTime = departureTime;
+    this.newDepartureTime = this.departureTime;
   }
 
   public static LocalTime getCurrentTime() {

@@ -19,6 +19,9 @@ public class TrainDispatchUi {
 
     TrainDeparture.setCurrentTime(17, 50);
     System.out.println(printDepartureTable());
+
+    TrainDeparture.setCurrentTime(18, 40);
+    System.out.println(printDepartureTable());
   }
 
   /**
