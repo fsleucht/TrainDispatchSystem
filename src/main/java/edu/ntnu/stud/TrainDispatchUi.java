@@ -54,7 +54,7 @@ public class TrainDispatchUi {
     if (trainDeparture.getTrack() != -1) {
       trainDepartureString.append("    Track: ").append(trainDeparture.getTrack());
     }
-    if (trainDeparture.getDelay().getHour() != 0 || trainDeparture.getDelay().getMinute() != 0) {
+    if (trainDeparture.getDelay().getHour() != 0 && trainDeparture.getDelay().getMinute() != 0) {
       trainDepartureString.append("    Delay: ").append(trainDeparture.getDelay());
     }
     return trainDepartureString.toString();

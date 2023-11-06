@@ -17,8 +17,8 @@ public class TrainDeparture {
   private final LocalTime departureTime;
   private final String line;
   private final String destination;
-  private int track = -1;
-  private LocalTime delay = LocalTime.of(0, 0);
+  private int track;
+  private LocalTime delay;
   private LocalTime newDepartureTime;
 
   /**
@@ -35,7 +35,8 @@ public class TrainDeparture {
    *                                  if line is null or empty or
    *                                  if destination is null or empty
    */
-  public TrainDeparture(int trainNumber, int hours, int minutes, String line, String destination) {
+  public TrainDeparture(int trainNumber, int hours, int minutes, String line, String destination)
+      throws IllegalArgumentException {
     if (trainNumber <= 0) {
       throw new IllegalArgumentException("Train number must be a positive number");
     }
@@ -62,36 +63,78 @@ public class TrainDeparture {
     this.line = line;
     this.destination = destination;
     this.newDepartureTime = this.departureTime;
+    this.track = -1;
+    this.delay = LocalTime.of(0, 0);
   }
 
+  /**
+   * Gets the current time.
+   *
+   * @return current time
+   */
   public static LocalTime getCurrentTime() {
     return currentTime;
   }
 
+  /**
+   * Gets the train number.
+   *
+   * @return train number
+   */
   public int getTrainNumber() {
     return trainNumber;
   }
 
+  /**
+   * Gets the departure time of the train.
+   *
+   * @return departure time
+   */
   public LocalTime getDepartureTime() {
     return departureTime;
   }
 
+  /**
+   * Gets the line the train operates on.
+   *
+   * @return line
+   */
   public String getLine() {
     return line;
   }
 
+  /**
+   * Gets the destination of the train.
+   *
+   * @return destination
+   */
   public String getDestination() {
     return destination;
   }
 
+  /**
+   * Gets the track number.
+   *
+   * @return track
+   */
   public int getTrack() {
     return track;
   }
 
+  /**
+   * Gets the delay.
+   *
+   * @return delay
+   */
   public LocalTime getDelay() {
     return delay;
   }
 
+  /**
+   * Gets the new departure time.
+   *
+   * @return new departure time
+   */
   public LocalTime getNewDepartureTime() {
     return newDepartureTime;
   }
@@ -104,7 +147,7 @@ public class TrainDeparture {
    * @throws IllegalArgumentException if hours or minutes are not between 0 and 23/59 or
    *                                  if time is set before the current time
    */
-  public static void setCurrentTime(int hours, int minutes) {
+  public static void setCurrentTime(int hours, int minutes) throws IllegalArgumentException {
     if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
       throw new IllegalArgumentException("Hours must be between 0 and 23, "
           + "minutes must be between 0 and 59");
@@ -122,7 +165,7 @@ public class TrainDeparture {
    * @param track the track number of the train
    * @throws IllegalArgumentException if track is not -1 or a positive number
    */
-  public void setTrack(int track) {
+  public void setTrack(int track) throws IllegalArgumentException {
     if (track <= -1 || track == 0) {
       throw new IllegalArgumentException("Track must be -1 or a positive number");
     }
@@ -136,7 +179,7 @@ public class TrainDeparture {
    * @param minutes number of minutes
    * @throws IllegalArgumentException if hours or minutes are not between 0 and 23/59
    */
-  public void setDelay(int hours, int minutes) {
+  public void setDelay(int hours, int minutes) throws IllegalArgumentException {
     if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
       throw new IllegalArgumentException("Hours must be between 0 and 23, "
           + "minutes must be between 0 and 59");

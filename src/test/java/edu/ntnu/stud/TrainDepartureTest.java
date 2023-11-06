@@ -20,6 +20,11 @@ public class TrainDepartureTest {
     assertEquals(minutes, trainDeparture.getDepartureTime().getMinute());
     assertEquals(line, trainDeparture.getLine());
     assertEquals(destination, trainDeparture.getDestination());
+    assertEquals(-1, trainDeparture.getTrack());
+    assertEquals(0, trainDeparture.getDelay().getHour());
+    assertEquals(0, trainDeparture.getDelay().getMinute());
+    assertEquals(hours, trainDeparture.getNewDepartureTime().getHour());
+    assertEquals(minutes, trainDeparture.getNewDepartureTime().getMinute());
   }
 
   @Test
@@ -48,11 +53,22 @@ public class TrainDepartureTest {
   public void testConstructorInvalidMinutes() {
     int trainNumber = 30;
     int hours = 12;
-    int minutes = -1;
+    int minutes = 60;
     String line = "F4";
     String destination = "Bergen";
 
     assertThrows(IllegalArgumentException.class, () -> new TrainDeparture(trainNumber, hours, minutes, line, destination));
+  }
+  @Test
+  public void testConstructorInvalidTime() {
+    int trainNumber = 30;
+    int hours = 12;
+    int minutes = 20;
+    String line = "F4";
+    String destination = "Bergen";
+
+    TrainDeparture.setCurrentTime(hours, minutes);
+    assertThrows(IllegalArgumentException.class, () -> new TrainDeparture(trainNumber, hours - 1, minutes, line, destination));
   }
 
   @Test
