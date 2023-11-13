@@ -4,7 +4,10 @@ package edu.ntnu.stud;
  * This is the UI class for the train dispatch application.
  */
 public class TrainDispatchUi {
-  private TrainDeparture[] trainDepartures;
+  private TrainDepartureRegistry registry;
+
+  public TrainDispatchUi() {
+  }
 
   /**
    * Methode to start the UI.
@@ -12,8 +15,18 @@ public class TrainDispatchUi {
   public void start() {
     System.out.println(printDepartureTable());
 
-    trainDepartures[0].setTrack(5);
-    trainDepartures[0].setDelay(1, 30);
+    System.out.println("Searching for train number 501");
+    if (this.registry.searchTrainDeparture(501).isPresent()) {
+      TrainDeparture departure = this.registry.searchTrainDeparture(501).get();
+      System.out.println(printTrainDeparture(departure) + "\n");
+      departure.setTrack(2);
+      departure.setDelay(0, 10);
+      System.out.println(printTrainDeparture(departure) + "\n");
+
+    } else {
+      System.out.println("Train number 501 not found");
+    }
+
     TimeManager.setCurrentTime(9, 35);
     System.out.println(printDepartureTable());
 
@@ -28,11 +41,11 @@ public class TrainDispatchUi {
    * Methode to initialize the UI.
    */
   public void init() {
-    trainDepartures = new TrainDeparture[4];
-    trainDepartures[0] = new TrainDeparture(501, 8, 15, "1", "Oslo");
-    trainDepartures[1] = new TrainDeparture(502, 13, 45, "1", "Trondheim");
-    trainDepartures[2] = new TrainDeparture(31, 10, 20, "14", "Mosjøen");
-    trainDepartures[3] = new TrainDeparture(135, 18, 39, "12", "Bodø");
+    this.registry = new TrainDepartureRegistry();
+    this.registry.addTrainDeparture(501, 8, 15, "1", "Oslo");
+    this.registry.addTrainDeparture(502, 13, 45, "1", "Trondheim");
+    this.registry.addTrainDeparture(31, 10, 20, "14", "Mosjøen");
+    this.registry.addTrainDeparture(135, 18, 39, "12", "Bodø");
   }
 
   /**
@@ -42,9 +55,6 @@ public class TrainDispatchUi {
    * @return a string representation of the train departure
    */
   private String printTrainDeparture(TrainDeparture trainDeparture) {
-    if (trainDeparture.getNewDepartureTime().isBefore(TimeManager.getCurrentTime())) {
-      return null;
-    }
     StringBuilder trainDepartureString = new StringBuilder();
     trainDepartureString.append("Number: ").append(trainDeparture.getTrainNumber())
         .append("    Departure: ").append(trainDeparture.getDepartureTime())
@@ -69,10 +79,8 @@ public class TrainDispatchUi {
     StringBuilder departureTable = new StringBuilder();
     departureTable.append("Current time: ").append(TimeManager.getCurrentTime()).append('\n');
 
-    for (TrainDeparture trainDeparture : trainDepartures) {
-      if (printTrainDeparture(trainDeparture) != null) {
+    for (TrainDeparture trainDeparture : this.registry.getTrainDepartureSorted()) {
         departureTable.append(printTrainDeparture(trainDeparture)).append('\n');
-      }
     }
     return departureTable.toString();
   }

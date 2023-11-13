@@ -79,6 +79,7 @@ public class TrainDepartureRegistry {
    * @return a list of all TrainDeparture objects sorted by departure time
    */
   public List<TrainDeparture> getTrainDepartureSorted() {
+    removePassedTrainDepartures();
     return trainDepartureMap.values().stream()
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());

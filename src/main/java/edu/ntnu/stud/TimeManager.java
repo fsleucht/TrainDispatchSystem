@@ -2,6 +2,9 @@ package edu.ntnu.stud;
 
 import java.time.LocalTime;
 
+/**
+ * This class is responsible for storing and updating the current time.
+ */
 public class TimeManager {
   private static LocalTime currentTime = LocalTime.of(0, 0);
 

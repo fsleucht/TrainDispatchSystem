@@ -43,7 +43,6 @@ public class TrainDeparture {
       throw new IllegalArgumentException("Hours must be between 0 and 23, "
           + "minutes must be between 0 and 59");
     }
-    LocalTime setTime = LocalTime.of(hours, minutes);
 
     if (line == null || line.isEmpty()) {
       throw new IllegalArgumentException("Line cannot be null or empty");
@@ -54,7 +53,7 @@ public class TrainDeparture {
     }
 
     this.trainNumber = trainNumber;
-    this.departureTime = setTime;
+    this.departureTime = LocalTime.of(hours, minutes);
     this.line = line;
     this.destination = destination;
     this.newDepartureTime = this.departureTime;
