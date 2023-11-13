@@ -14,13 +14,13 @@ public class TrainDispatchUi {
 
     trainDepartures[0].setTrack(5);
     trainDepartures[0].setDelay(1, 30);
-    TrainDeparture.setCurrentTime(9, 35);
+    TimeManager.setCurrentTime(9, 35);
     System.out.println(printDepartureTable());
 
-    TrainDeparture.setCurrentTime(17, 50);
+    TimeManager.setCurrentTime(17, 50);
     System.out.println(printDepartureTable());
 
-    TrainDeparture.setCurrentTime(18, 40);
+    TimeManager.setCurrentTime(18, 40);
     System.out.println(printDepartureTable());
   }
 
@@ -42,7 +42,7 @@ public class TrainDispatchUi {
    * @return a string representation of the train departure
    */
   private String printTrainDeparture(TrainDeparture trainDeparture) {
-    if (trainDeparture.getNewDepartureTime().isBefore(TrainDeparture.getCurrentTime())) {
+    if (trainDeparture.getNewDepartureTime().isBefore(TimeManager.getCurrentTime())) {
       return null;
     }
     StringBuilder trainDepartureString = new StringBuilder();
@@ -67,7 +67,7 @@ public class TrainDispatchUi {
    */
   private String printDepartureTable() {
     StringBuilder departureTable = new StringBuilder();
-    departureTable.append("Current time: ").append(TrainDeparture.getCurrentTime()).append('\n');
+    departureTable.append("Current time: ").append(TimeManager.getCurrentTime()).append('\n');
 
     for (TrainDeparture trainDeparture : trainDepartures) {
       if (printTrainDeparture(trainDeparture) != null) {

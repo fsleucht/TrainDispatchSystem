@@ -9,10 +9,8 @@ import java.time.LocalTime;
  * the train number, departure time, line, destination, track and delay.
  * Track and delay can be set after the object is created.
  * The class is responsible for storing and updating the current time.
- * It also has a toString method that returns a String representation of the object.
  */
 public class TrainDeparture {
-  private static LocalTime currentTime = LocalTime.of(0, 0);
   private final int trainNumber;
   private final LocalTime departureTime;
   private final String line;
@@ -46,9 +44,6 @@ public class TrainDeparture {
           + "minutes must be between 0 and 59");
     }
     LocalTime setTime = LocalTime.of(hours, minutes);
-    if (setTime.isBefore(currentTime)) {
-      throw new IllegalArgumentException("Departure time cannot be before the current time");
-    }
 
     if (line == null || line.isEmpty()) {
       throw new IllegalArgumentException("Line cannot be null or empty");
@@ -65,15 +60,6 @@ public class TrainDeparture {
     this.newDepartureTime = this.departureTime;
     this.track = -1;
     this.delay = LocalTime.of(0, 0);
-  }
-
-  /**
-   * Gets the current time.
-   *
-   * @return current time
-   */
-  public static LocalTime getCurrentTime() {
-    return currentTime;
   }
 
   /**
@@ -137,26 +123,6 @@ public class TrainDeparture {
    */
   public LocalTime getNewDepartureTime() {
     return newDepartureTime;
-  }
-
-  /**
-   * Methode that sets the current time.
-   *
-   * @param hours number of hours
-   * @param minutes number of minutes
-   * @throws IllegalArgumentException if hours or minutes are not between 0 and 23/59 or
-   *                                  if time is set before the current time
-   */
-  public static void setCurrentTime(int hours, int minutes) throws IllegalArgumentException {
-    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-      throw new IllegalArgumentException("Hours must be between 0 and 23, "
-          + "minutes must be between 0 and 59");
-    }
-    LocalTime setTime = LocalTime.of(hours, minutes);
-    if (setTime.isBefore(currentTime)) {
-      throw new IllegalArgumentException("Time cannot be set before the current time");
-    }
-    currentTime = setTime;
   }
 
   /**

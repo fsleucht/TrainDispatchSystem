@@ -66,6 +66,14 @@ public class TrainDepartureRegistry {
   }
 
   /**
+   * Removes all TrainDeparture objects with a departure time before the current time.
+   */
+  public void removePassedTrainDepartures() {
+    trainDepartureMap.values().removeIf(
+        trainDeparture -> trainDeparture.getDepartureTime().isBefore(TimeManager.getCurrentTime()));
+  }
+
+  /**
    * Sorts all TrainDeparture objects by departure time.
    *
    * @return a list of all TrainDeparture objects sorted by departure time
