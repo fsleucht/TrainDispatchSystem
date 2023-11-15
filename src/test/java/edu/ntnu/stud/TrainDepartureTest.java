@@ -67,7 +67,7 @@ public class TrainDepartureTest {
     String line = "F4";
     String destination = "Bergen";
 
-    TrainDeparture.setCurrentTime(hours, minutes);
+    TimeManager.setCurrentTime(hours, minutes);
     assertThrows(IllegalArgumentException.class, () -> new TrainDeparture(trainNumber, hours - 1, minutes, line, destination));
   }
 
@@ -92,36 +92,7 @@ public class TrainDepartureTest {
 
     assertThrows(IllegalArgumentException.class, () -> new TrainDeparture(trainNumber, hours, minutes, line, destination));
   }
-  @Test
-  public void testSetCurrentTimeValidInput() {
-    int hours = 12;
-    int minutes = 20;
-    TrainDeparture.setCurrentTime(hours, minutes);
-    assertEquals(hours, TrainDeparture.getCurrentTime().getHour());
-    assertEquals(minutes, TrainDeparture.getCurrentTime().getMinute());
-  }
 
-  @Test
-  public void testSetCurrentTimeInvalidHours() {
-    int hours = -1;
-    int minutes = 20;
-    assertThrows(IllegalArgumentException.class, () -> TrainDeparture.setCurrentTime(hours, minutes));
-  }
-
-  @Test
-  public void testSetCurrentTimeInvalidMinutes() {
-    int hours = 12;
-    int minutes = 62;
-    assertThrows(IllegalArgumentException.class, () -> TrainDeparture.setCurrentTime(hours, minutes));
-  }
-
-  @Test
-  public void testSetCurrentTimeInvalidTime() {
-    int hours = 12;
-    int minutes = 20;
-    TrainDeparture.setCurrentTime(hours, minutes);
-    assertThrows(IllegalArgumentException.class, () -> TrainDeparture.setCurrentTime(hours - 1, minutes));
-  }
 
   @Test
   public void testSetTrackValidInput() {

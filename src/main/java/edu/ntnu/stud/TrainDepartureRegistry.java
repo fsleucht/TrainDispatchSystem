@@ -36,8 +36,8 @@ public class TrainDepartureRegistry {
     if (trainDepartureMap.containsKey(trainNumber)) {
       throw new IllegalArgumentException("Train number already exists");
     }
-    TrainDeparture trainDeparture =
-        new TrainDeparture(trainNumber, hours, minutes, line, destination);
+    TrainDeparture trainDeparture = new TrainDeparture(
+            trainNumber, hours, minutes, line, destination);
     trainDepartureMap.put(trainNumber, trainDeparture);
   }
 

@@ -44,6 +44,10 @@ public class TrainDeparture {
           + "minutes must be between 0 and 59");
     }
 
+    if (LocalTime.of(hours, minutes).isBefore(TimeManager.getCurrentTime())) {
+      throw new IllegalArgumentException("Time cannot be set before the current time");
+    }
+
     if (line == null || line.isEmpty()) {
       throw new IllegalArgumentException("Line cannot be null or empty");
     }

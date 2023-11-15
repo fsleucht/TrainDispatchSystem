@@ -80,7 +80,7 @@ public class TrainDispatchUi {
     departureTable.append("Current time: ").append(TimeManager.getCurrentTime()).append('\n');
 
     for (TrainDeparture trainDeparture : this.registry.getTrainDepartureSorted()) {
-        departureTable.append(printTrainDeparture(trainDeparture)).append('\n');
+      departureTable.append(printTrainDeparture(trainDeparture)).append('\n');
     }
     return departureTable.toString();
   }
