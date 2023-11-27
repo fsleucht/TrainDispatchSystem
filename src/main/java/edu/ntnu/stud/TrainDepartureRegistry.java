@@ -84,4 +84,20 @@ public class TrainDepartureRegistry {
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
+
+  public void assignTrack(int trainNumber, int track) throws IllegalArgumentException {
+    if (!trainDepartureMap.containsKey(trainNumber)) {
+      throw new IllegalArgumentException("Train number does not exist");
+    }
+    TrainDeparture trainDeparture = trainDepartureMap.get(trainNumber);
+    trainDeparture.setTrack(track);
+  }
+
+  public void assignDelay(int trainNumber, int hours, int minutes) throws IllegalArgumentException {
+    if (!trainDepartureMap.containsKey(trainNumber)) {
+      throw new IllegalArgumentException("Train number does not exist");
+    }
+    TrainDeparture trainDeparture = trainDepartureMap.get(trainNumber);
+    trainDeparture.setDelay(hours, minutes);
+  }
 }

@@ -8,7 +8,6 @@ import java.time.LocalTime;
  * <p>It stores information about
  * the train number, departure time, line, destination, track and delay.
  * Track and delay can be set after the object is created.
- * The class is responsible for storing and updating the current time.
  */
 public class TrainDeparture {
   private final int trainNumber;
