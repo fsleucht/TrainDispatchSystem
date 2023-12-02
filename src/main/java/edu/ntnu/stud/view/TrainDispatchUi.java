@@ -3,6 +3,7 @@ package edu.ntnu.stud.view;
 import edu.ntnu.stud.model.TimeManager;
 import edu.ntnu.stud.model.TrainDeparture;
 import edu.ntnu.stud.model.TrainDepartureRegistry;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -46,12 +47,12 @@ public class TrainDispatchUi {
         case PRINT_DEPARTURE_TABLE -> printDepartureTable();
         case ADD_TRAIN_DEPARTURE -> addTrainDeparture();
         case ASSIGN_TRACK -> assignTrack();
-        case ASSIGN_DELAY -> assignDelay();
-        case SEARCH_TRAIN_DEPARTURE -> searchTrainDeparture();
+        case ASSIGN_DELAY -> setDelay();
+        case SEARCH_TRAIN_DEPARTURE -> searchTrainDepartureNumber();
         case SEARCH_DESTINATION -> searchTrainDepartureDestination();
         case UPDATE_TIME -> updateTime();
         case EXIT -> exit = true;
-        default -> System.out.println("Invalid choice.");
+        default -> System.out.println("Invalid choice");
       }
     }
     System.out.println("Exiting program.");
@@ -72,15 +73,15 @@ public class TrainDispatchUi {
   }
 
   private void printMenu() {
-    System.out.println(ANSI_UNDERLINE
-        + "\n   Main menu                                    Current time: "
+    System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "   Main menu                                    Current time: "
         + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
     System.out.println("[1] Show departure table");
-    System.out.println("[2] Add Train departure");
-    System.out.println("[3] Assign track to train departure");
-    System.out.println("[4] Add delay to train departure");
-    System.out.println("[5] Search for train departure by train number");
-    System.out.println("[6] Search for train departure by destination");
+    System.out.println("[2] Add departure");
+    System.out.println("[3] Assign track to departure");
+    System.out.println("[4] Set delay to departure");
+    System.out.println("[5] Search for departure by train number");
+    System.out.println("[6] Search for departure(s) by destination");
     System.out.println("[7] Update time");
     System.out.println("[8] Exit");
     System.out.print("> ");
@@ -113,104 +114,199 @@ public class TrainDispatchUi {
         track, delay);
   }
 
-  /**
-   * Methode that prints the departure table.
-   *
-   */
-  private void printDepartureTable() {
-    System.out.println("\n" + ANSI_UNDERLINE
-        + "   Train Departures                               Current time: "
-        + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+  private void printMultipleDepartures(List<TrainDeparture> departureList) {
     System.out.println(ANSI_BOLD + "Number" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Departure Time" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Line" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Destination" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Track" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Delay" + ANSI_RESET);
-    for (TrainDeparture trainDeparture : this.registry.getTrainDepartureSorted()) {
+    for (TrainDeparture trainDeparture : departureList) {
       System.out.println(printTrainDeparture(trainDeparture));
     }
+  }
+
+  /**
+   * Methode that prints the departure table.
+   *
+   */
+  private void printDepartureTable() {
+    System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "   Train Departures                               Current time: "
+        + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+    printMultipleDepartures(this.registry.getTrainDepartureSorted());
     System.out.print("\nPress [Enter] to go back");
     scanner.nextLine();
   }
 
   private void addTrainDeparture() {
-    try {
-      System.out.print("Train number: ");
-      int trainNumber = Integer.parseInt(scanner.nextLine());
-      System.out.print("Departure hours: ");
-      int hours = Integer.parseInt(scanner.nextLine());
-      System.out.print("Departure minutes: ");
-      int minutes = Integer.parseInt(scanner.nextLine());
-      System.out.print("Line: ");
-      String line = scanner.nextLine();
-      System.out.print("Destination: ");
-      String destination = scanner.nextLine();
-      this.registry.addTrainDeparture(trainNumber, hours, minutes, line, destination);
-      System.out.println("Train departure added.");
-    } catch (IllegalArgumentException e) {
-      System.out.println("\n" + e.getMessage());
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Add a departure                          Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Train number: ");
+        int trainNumber = Integer.parseInt(scanner.nextLine());
+        System.out.print("Departure hours: ");
+        int hours = Integer.parseInt(scanner.nextLine());
+        System.out.print("Departure minutes: ");
+        int minutes = Integer.parseInt(scanner.nextLine());
+        System.out.print("Line: ");
+        String line = scanner.nextLine();
+        System.out.print("Destination: ");
+        String destination = scanner.nextLine();
+        this.registry.addTrainDeparture(trainNumber, hours, minutes, line, destination);
+        System.out.println(ANSI_BOLD + "\nTrain departure added." + ANSI_RESET);
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
+
   }
 
   private void assignTrack() {
-    try {
-      System.out.print("Train number: ");
-      int trainNumber = Integer.parseInt(scanner.nextLine());
-      System.out.print("Track: ");
-      int track = Integer.parseInt(scanner.nextLine());
-      this.registry.assignTrack(trainNumber, track);
-      System.out.println("Track assigned.");
-    } catch (IllegalArgumentException e) {
-      System.out.println("\n" + e.getMessage());
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Assign track to departure                      Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Train number: ");
+        int trainNumber = Integer.parseInt(scanner.nextLine());
+        System.out.print("Track: ");
+        int track = Integer.parseInt(scanner.nextLine());
+        this.registry.assignTrack(trainNumber, track);
+        System.out.println(ANSI_BOLD + "\nTrack assigned." + ANSI_RESET);
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
   }
 
-  private void assignDelay() {
-    try {
-      System.out.print("Train number: ");
-      int trainNumber = Integer.parseInt(scanner.nextLine());
-      System.out.print("Delay hours: ");
-      int hours = Integer.parseInt(scanner.nextLine());
-      System.out.print("Delay minutes: ");
-      int minutes = Integer.parseInt(scanner.nextLine());
-      this.registry.assignDelay(trainNumber, hours, minutes);
-      System.out.println("Delay added.");
-    } catch (IllegalArgumentException e) {
-      System.out.println("\n" + e.getMessage());
+  private void setDelay() {
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Set departure delay                            Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Train number: ");
+        int trainNumber = Integer.parseInt(scanner.nextLine());
+        System.out.print("Hours: ");
+        String hoursString = scanner.nextLine();
+        int hours = hoursString.isEmpty() ? 0 : Integer.parseInt(hoursString);
+        System.out.print("Minutes: ");
+        int minutes = Integer.parseInt(scanner.nextLine());
+        this.registry.assignDelay(trainNumber, hours, minutes);
+        System.out.println(ANSI_BOLD + "\nDelay added." + ANSI_RESET);
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
   }
 
-  private void searchTrainDeparture() {
-    System.out.print("Train number: ");
-    int trainNumber = Integer.parseInt(scanner.nextLine());
-    if (this.registry.searchTrainDeparture(trainNumber).isPresent()) {
-      System.out.println(
-          printTrainDeparture(this.registry.searchTrainDeparture(trainNumber).get()));
-    } else {
-      System.out.println("Train number " + trainNumber + " not found");
+  private void searchTrainDepartureNumber() {
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Search for departure by number                 Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Train number: ");
+        int trainNumber = Integer.parseInt(scanner.nextLine());
+        if (this.registry.searchTrainDeparture(trainNumber).isEmpty()) {
+          System.out.println(ANSI_BOLD + "\nTrain number "
+              + trainNumber + " not found." + ANSI_RESET);
+        } else {
+          printMultipleDepartures(this.registry.searchTrainDeparture(trainNumber));
+        }
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
   }
 
   private void searchTrainDepartureDestination() {
-    System.out.print("Destination: ");
-    String destination = scanner.nextLine();
-    for (TrainDeparture trainDeparture :
-        this.registry.searchTrainDepartureDestination(destination)) {
-      System.out.println(printTrainDeparture(trainDeparture));
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Search for departure by destination            Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Destination: ");
+        String destination = scanner.nextLine();
+        if (this.registry.searchTrainDepartureDestination(destination).isEmpty()) {
+          System.out.println(ANSI_BOLD + "\nDestination "
+              + destination + " not found." + ANSI_RESET);
+        } else {
+          printMultipleDepartures(this.registry.searchTrainDepartureDestination(destination));
+        }
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
   }
 
   private void updateTime() {
-    try {
-      System.out.print("Hours: ");
-      int hours = Integer.parseInt(scanner.nextLine());
-      System.out.print("Minutes: ");
-      int minutes = Integer.parseInt(scanner.nextLine());
-      TimeManager.setCurrentTime(hours, minutes);
-      System.out.println("Time updated.");
-    } catch (IllegalArgumentException e) {
-      System.out.println("\n" + e.getMessage());
+    boolean exit = false;
+    while (!exit) {
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+          + "   Update time                                    Current time: "
+          + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+      try {
+        System.out.print("Hours: ");
+        String hoursString = scanner.nextLine();
+        int hours = hoursString.isEmpty() ? 0 : Integer.parseInt(hoursString);
+        System.out.print("Minutes: ");
+        int minutes = Integer.parseInt(scanner.nextLine());
+        TimeManager.setCurrentTime(hours, minutes);
+        System.out.println(ANSI_BOLD + "\nTime updated." + ANSI_RESET);
+      } catch (IllegalArgumentException e) {
+        System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
+            + ANSI_RESET + e.getMessage());
+      }
+      System.out.println("\nPress [Enter] to go back or [1] to try again");
+      System.out.print("> ");
+      String choice = scanner.nextLine();
+      if (!choice.equals("1")) {
+        exit = true;
+      }
     }
   }
 }

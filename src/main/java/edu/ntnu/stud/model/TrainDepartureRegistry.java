@@ -48,8 +48,10 @@ public class TrainDepartureRegistry {
    * @param trainNumber the number of the train
    * @return an Optional containing the TrainDeparture object with the given train number.
    */
-  public Optional<TrainDeparture> searchTrainDeparture(int trainNumber) {
-    return Optional.ofNullable(trainDepartureMap.get(trainNumber));
+  public List<TrainDeparture> searchTrainDeparture(int trainNumber) {
+    return trainDepartureMap.values().stream()
+        .filter(trainDeparture -> trainDeparture.getTrainNumber() == trainNumber)
+        .collect(Collectors.toList());
   }
 
   /**
