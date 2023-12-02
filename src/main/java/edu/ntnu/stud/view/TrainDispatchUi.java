@@ -36,9 +36,16 @@ public class TrainDispatchUi {
    * Methode to start the UI.
    */
   public void start() {
-    System.out.println(ANSI_BOLD + ANSI_UNDERLINE
-        + "                      Train Dispatch System v0.1                      "
+    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "                                                                      "
+        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
+        + "\n                      Train Dispatch System v0.1                      "
+        + ANSI_RESET
+        + "\n\n\n\n                      Press [Enter] to continue                       "
+        + ANSI_UNDERLINE
+        +"\n                                                                      "
         + ANSI_RESET);
+    scanner.nextLine();
     boolean exit = false;
     while (!exit) {
       printMenu();
@@ -55,7 +62,13 @@ public class TrainDispatchUi {
         default -> System.out.println("Invalid choice");
       }
     }
-    System.out.println("Exiting program.");
+    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "                                                                      "
+        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
+        + "\n                      Exiting System...                      "
+        + ANSI_RESET+ ANSI_UNDERLINE
+        +"\n\n\n\n\n                                                                      "
+        + ANSI_RESET);
   }
 
   /**
