@@ -105,8 +105,8 @@ public class TrainDispatchUi {
     if (trainDeparture.getTrack() != -1) {
       track = String.valueOf(trainDeparture.getTrack());
     }
-    if (trainDeparture.getDelay().getHour() != 0 && trainDeparture.getDelay().getMinute() != 0) {
-      delay = String.valueOf(trainDeparture.getDelay());
+    if (trainDeparture.getDelay().getHour() != 0 || trainDeparture.getDelay().getMinute() != 0) {
+      delay = "+" + trainDeparture.getDelay();
       newDepartureTime = String.valueOf(trainDeparture.getNewDepartureTime());
       departureTime = ANSI_CROSSED_OUT + departureTime + ANSI_RESET + " ";
     }
@@ -169,7 +169,6 @@ public class TrainDispatchUi {
         exit = true;
       }
     }
-
   }
 
   private void assignTrack() {
