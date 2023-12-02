@@ -3,7 +3,6 @@ package edu.ntnu.stud.view;
 import edu.ntnu.stud.model.TimeManager;
 import edu.ntnu.stud.model.TrainDeparture;
 import edu.ntnu.stud.model.TrainDepartureRegistry;
-
 import java.util.Scanner;
 
 /**
@@ -12,6 +11,14 @@ import java.util.Scanner;
 public class TrainDispatchUi {
   private TrainDepartureRegistry registry;
   private Scanner scanner;
+  private static final String PRINT_DEPARTURE_TABLE = "1";
+  private static final String ADD_TRAIN_DEPARTURE = "2";
+  private static final String ASSIGN_TRACK = "3";
+  private static final String ASSIGN_DELAY = "4";
+  private static final String SEARCH_TRAIN_DEPARTURE = "5";
+  private static final String SEARCH_DESTINATION = "6";
+  private static final String UPDATE_TIME = "7";
+  private static final String EXIT = "8";
 
   public TrainDispatchUi() {
   }
@@ -22,46 +29,21 @@ public class TrainDispatchUi {
   public void start() {
     boolean exit = false;
     while (!exit) {
-      System.out.println("---Train Dispatch v0.1-------------------Current time: "
-          + TimeManager.getCurrentTime() + "---");
-      System.out.println("1. Show departure table");
-      System.out.println("2. Add Train departure");
-      System.out.println("3. Assign track to train departure");
-      System.out.println("4. Add delay to train departure");
-      System.out.println("5. Search for train departure by train number");
-      System.out.println("6. Search for train departure by destination");
-      System.out.println("7. Update time");
-      System.out.println("8. Exit");
-      System.out.print("> ");
+      printMenu();
       String choice = scanner.nextLine();
       switch (choice) {
-        case "1":
-          printDepartureTable();
-          break;
-        case "2":
-          addTrainDeparture();
-          break;
-        case "3":
-          assignTrack();
-          break;
-        case "4":
-          assignDelay();
-          break;
-        case "5":
-          searchTrainDeparture();
-          break;
-        case "6":
-          searchTrainDepartureDestination();
-          break;
-        case "7":
-          updateTime();
-          break;
-        case "8":
-          System.out.println("Exiting program.");
+        case PRINT_DEPARTURE_TABLE -> printDepartureTable();
+        case ADD_TRAIN_DEPARTURE -> addTrainDeparture();
+        case ASSIGN_TRACK -> assignTrack();
+        case ASSIGN_DELAY -> assignDelay();
+        case SEARCH_TRAIN_DEPARTURE -> searchTrainDeparture();
+        case SEARCH_DESTINATION -> searchTrainDepartureDestination();
+        case UPDATE_TIME -> updateTime();
+        case EXIT -> {
+          System.out.println("Exiting Train Dispatch System.");
           exit = true;
-          break;
-        default:
-          System.out.println("Invalid choice.");
+        }
+        default -> System.out.println("Invalid choice.");
       }
     }
   }
@@ -80,6 +62,19 @@ public class TrainDispatchUi {
     this.registry.addTrainDeparture(506, 22, 42, "1", "Trondheim");
   }
 
+  private void printMenu() {
+    System.out.println("---Train Dispatch System v0.1-------------------Current time: "
+        + TimeManager.getCurrentTime() + "---");
+    System.out.println("1. Show departure table");
+    System.out.println("2. Add Train departure");
+    System.out.println("3. Assign track to train departure");
+    System.out.println("4. Add delay to train departure");
+    System.out.println("5. Search for train departure by train number");
+    System.out.println("6. Search for train departure by destination");
+    System.out.println("7. Update time");
+    System.out.println("8. Exit");
+    System.out.print("> ");
+  }
   /**
    * Methode that prints a single train departure.
    *
