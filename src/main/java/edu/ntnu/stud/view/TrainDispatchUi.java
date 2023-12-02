@@ -36,15 +36,7 @@ public class TrainDispatchUi {
    * Methode to start the UI.
    */
   public void start() {
-    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
-        + "                                                                      "
-        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
-        + "\n                      Train Dispatch System v0.1                      "
-        + ANSI_RESET
-        + "\n\n\n\n                      Press [Enter] to continue                       "
-        + ANSI_UNDERLINE
-        +"\n                                                                      "
-        + ANSI_RESET);
+    printStartPage();
     scanner.nextLine();
     boolean exit = false;
     while (!exit) {
@@ -62,13 +54,7 @@ public class TrainDispatchUi {
         default -> System.out.println("Invalid choice");
       }
     }
-    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
-        + "                                                                      "
-        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
-        + "\n                      Exiting System...                      "
-        + ANSI_RESET+ ANSI_UNDERLINE
-        +"\n\n\n\n\n                                                                      "
-        + ANSI_RESET);
+    printExitPage();
   }
 
   /**
@@ -320,5 +306,27 @@ public class TrainDispatchUi {
         exit = true;
       }
     }
+  }
+
+
+  private void printStartPage() {
+    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "                                                                      "
+        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
+        + "\n                      Train Dispatch System v0.1                      "
+        + ANSI_RESET
+        + "\n\n\n\n                      Press [Enter] to continue                       "
+        + ANSI_UNDERLINE
+        +"\n                                                                      "
+        + ANSI_RESET);
+  }
+  private void printExitPage() {
+    System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
+        + "                                                                      "
+        + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
+        + "\n                      Exiting System...                      "
+        + ANSI_RESET+ ANSI_UNDERLINE
+        +"\n\n\n\n\n                                                                      "
+        + ANSI_RESET);
   }
 }
