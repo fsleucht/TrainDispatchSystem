@@ -1,4 +1,9 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.view;
+
+import edu.ntnu.stud.model.TimeManager;
+import edu.ntnu.stud.model.TrainDeparture;
+import edu.ntnu.stud.model.TrainDepartureRegistry;
+
 import java.util.Scanner;
 
 /**
@@ -16,7 +21,7 @@ public class TrainDispatchUi {
    */
   public void start() {
     boolean exit = false;
-    while(!exit) {
+    while (!exit) {
       System.out.println("---Train Dispatch v0.1-------------------Current time: "
           + TimeManager.getCurrentTime() + "---");
       System.out.println("1. Show departure table");
@@ -54,26 +59,10 @@ public class TrainDispatchUi {
         case "8":
           System.out.println("Exiting program.");
           exit = true;
+          break;
         default:
           System.out.println("Invalid choice.");
       }
-    }
-
-    System.out.println("Searching for train number 501");
-    if (this.registry.searchTrainDeparture(501).isPresent()) {
-      TrainDeparture departure = this.registry.searchTrainDeparture(501).get();
-      System.out.println(printTrainDeparture(departure) + "\n");
-      departure.setTrack(2);
-      departure.setDelay(0, 10);
-      System.out.println(printTrainDeparture(departure) + "\n");
-
-    } else {
-      System.out.println("Train number 501 not found");
-    }
-
-    System.out.println("Searching for trains to Trondheim");
-    for (TrainDeparture departure : this.registry.searchTrainDepartureDestination("Trondheim")) {
-      System.out.println(printTrainDeparture(departure));
     }
   }
 

@@ -1,4 +1,4 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.model;
 
 import java.util.Comparator;
 import java.util.HashMap;

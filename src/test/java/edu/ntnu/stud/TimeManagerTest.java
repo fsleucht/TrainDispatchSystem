@@ -1,5 +1,6 @@
 package edu.ntnu.stud;
 
+import edu.ntnu.stud.model.TimeManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
