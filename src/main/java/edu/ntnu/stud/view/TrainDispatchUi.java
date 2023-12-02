@@ -11,6 +11,8 @@ import java.util.Scanner;
 public class TrainDispatchUi {
   private TrainDepartureRegistry registry;
   private Scanner scanner;
+
+  //fields for menu choices
   private static final String PRINT_DEPARTURE_TABLE = "1";
   private static final String ADD_TRAIN_DEPARTURE = "2";
   private static final String ASSIGN_TRACK = "3";
@@ -20,6 +22,12 @@ public class TrainDispatchUi {
   private static final String UPDATE_TIME = "7";
   private static final String EXIT = "8";
 
+  //fields for ANSI escape codes
+  private static final String ANSI_RESET = "\u001B[0m";
+  private static final String ANSI_UNDERLINE = "\u001B[4m";
+  private static final String ANSI_BOLD = "\u001B[1m";
+  private static final String ANSI_CROSSED_OUT = "\u001B[9m";
+
   public TrainDispatchUi() {
   }
 
@@ -27,6 +35,9 @@ public class TrainDispatchUi {
    * Methode to start the UI.
    */
   public void start() {
+    System.out.println(ANSI_BOLD + ANSI_UNDERLINE
+        + "                      Train Dispatch System v0.1                      "
+        + ANSI_RESET);
     boolean exit = false;
     while (!exit) {
       printMenu();
@@ -39,13 +50,11 @@ public class TrainDispatchUi {
         case SEARCH_TRAIN_DEPARTURE -> searchTrainDeparture();
         case SEARCH_DESTINATION -> searchTrainDepartureDestination();
         case UPDATE_TIME -> updateTime();
-        case EXIT -> {
-          System.out.println("Exiting Train Dispatch System.");
-          exit = true;
-        }
+        case EXIT -> exit = true;
         default -> System.out.println("Invalid choice.");
       }
     }
+    System.out.println("Exiting program.");
   }
 
   /**
@@ -63,18 +72,20 @@ public class TrainDispatchUi {
   }
 
   private void printMenu() {
-    System.out.println("---Train Dispatch System v0.1-------------------Current time: "
-        + TimeManager.getCurrentTime() + "---");
-    System.out.println("1. Show departure table");
-    System.out.println("2. Add Train departure");
-    System.out.println("3. Assign track to train departure");
-    System.out.println("4. Add delay to train departure");
-    System.out.println("5. Search for train departure by train number");
-    System.out.println("6. Search for train departure by destination");
-    System.out.println("7. Update time");
-    System.out.println("8. Exit");
+    System.out.println(ANSI_UNDERLINE
+        + "\n   Main menu                                    Current time: "
+        + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+    System.out.println("[1] Show departure table");
+    System.out.println("[2] Add Train departure");
+    System.out.println("[3] Assign track to train departure");
+    System.out.println("[4] Add delay to train departure");
+    System.out.println("[5] Search for train departure by train number");
+    System.out.println("[6] Search for train departure by destination");
+    System.out.println("[7] Update time");
+    System.out.println("[8] Exit");
     System.out.print("> ");
   }
+
   /**
    * Methode that prints a single train departure.
    *
@@ -82,19 +93,24 @@ public class TrainDispatchUi {
    * @return a string representation of the train departure
    */
   private String printTrainDeparture(TrainDeparture trainDeparture) {
-    StringBuilder trainDepartureString = new StringBuilder();
-    trainDepartureString.append("Number: ").append(trainDeparture.getTrainNumber())
-        .append("    Departure: ").append(trainDeparture.getDepartureTime())
-        .append("    Line: ").append(trainDeparture.getLine()).append('\'')
-        .append("    Destination: '").append(trainDeparture.getDestination()).append('\'');
-
+    String format = "%-8s | %-6s %-9s | %-6s | %-13s | %-7s | %-5s";
+    String trainNumber = String.valueOf(trainDeparture.getTrainNumber());
+    String departureTime = String.valueOf(trainDeparture.getDepartureTime());
+    String newDepartureTime = "";
+    String line = trainDeparture.getLine();
+    String destination = trainDeparture.getDestination();
+    String track = "";
+    String delay = "";
     if (trainDeparture.getTrack() != -1) {
-      trainDepartureString.append("    Track: ").append(trainDeparture.getTrack());
+      track = String.valueOf(trainDeparture.getTrack());
     }
     if (trainDeparture.getDelay().getHour() != 0 && trainDeparture.getDelay().getMinute() != 0) {
-      trainDepartureString.append("    Delay: ").append(trainDeparture.getDelay());
+      delay = String.valueOf(trainDeparture.getDelay());
+      newDepartureTime = String.valueOf(trainDeparture.getNewDepartureTime());
+      departureTime = ANSI_CROSSED_OUT + departureTime + ANSI_RESET + " ";
     }
-    return trainDepartureString.toString();
+    return String.format(format, trainNumber, departureTime, newDepartureTime, line, destination,
+        track, delay);
   }
 
   /**
@@ -102,23 +118,30 @@ public class TrainDispatchUi {
    *
    */
   private void printDepartureTable() {
-    StringBuilder departureTable = new StringBuilder();
-    departureTable.append("Current time: ").append(TimeManager.getCurrentTime()).append('\n');
-
+    System.out.println("\n" + ANSI_UNDERLINE
+        + "   Train Departures                               Current time: "
+        + TimeManager.getCurrentTime() + "   " + ANSI_RESET);
+    System.out.println(ANSI_BOLD + "Number" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Departure Time" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Line" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Destination" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Track" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Delay" + ANSI_RESET);
     for (TrainDeparture trainDeparture : this.registry.getTrainDepartureSorted()) {
-      departureTable.append(printTrainDeparture(trainDeparture)).append('\n');
+      System.out.println(printTrainDeparture(trainDeparture));
     }
-    System.out.println(departureTable);
+    System.out.print("\nPress [Enter] to go back");
+    scanner.nextLine();
   }
 
   private void addTrainDeparture() {
     try {
       System.out.print("Train number: ");
       int trainNumber = Integer.parseInt(scanner.nextLine());
-      System.out.print("Departure time (hh:mm): ");
-      String[] time = scanner.nextLine().split(":");
-      int hours = Integer.parseInt(time[0]);
-      int minutes = Integer.parseInt(time[1]);
+      System.out.print("Departure hours: ");
+      int hours = Integer.parseInt(scanner.nextLine());
+      System.out.print("Departure minutes: ");
+      int minutes = Integer.parseInt(scanner.nextLine());
       System.out.print("Line: ");
       String line = scanner.nextLine();
       System.out.print("Destination: ");
@@ -147,10 +170,10 @@ public class TrainDispatchUi {
     try {
       System.out.print("Train number: ");
       int trainNumber = Integer.parseInt(scanner.nextLine());
-      System.out.print("Delay (hh:mm): ");
-      String[] time = scanner.nextLine().split(":");
-      int hours = Integer.parseInt(time[0]);
-      int minutes = Integer.parseInt(time[1]);
+      System.out.print("Delay hours: ");
+      int hours = Integer.parseInt(scanner.nextLine());
+      System.out.print("Delay minutes: ");
+      int minutes = Integer.parseInt(scanner.nextLine());
       this.registry.assignDelay(trainNumber, hours, minutes);
       System.out.println("Delay added.");
     } catch (IllegalArgumentException e) {
@@ -162,7 +185,8 @@ public class TrainDispatchUi {
     System.out.print("Train number: ");
     int trainNumber = Integer.parseInt(scanner.nextLine());
     if (this.registry.searchTrainDeparture(trainNumber).isPresent()) {
-      System.out.println(printTrainDeparture(this.registry.searchTrainDeparture(trainNumber).get()));
+      System.out.println(
+          printTrainDeparture(this.registry.searchTrainDeparture(trainNumber).get()));
     } else {
       System.out.println("Train number " + trainNumber + " not found");
     }
@@ -171,7 +195,8 @@ public class TrainDispatchUi {
   private void searchTrainDepartureDestination() {
     System.out.print("Destination: ");
     String destination = scanner.nextLine();
-    for (TrainDeparture trainDeparture : this.registry.searchTrainDepartureDestination(destination)) {
+    for (TrainDeparture trainDeparture :
+        this.registry.searchTrainDepartureDestination(destination)) {
       System.out.println(printTrainDeparture(trainDeparture));
     }
   }
