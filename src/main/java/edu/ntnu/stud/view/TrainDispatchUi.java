@@ -308,7 +308,6 @@ public class TrainDispatchUi {
     }
   }
 
-
   private void printStartPage() {
     System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "                                                                      "
@@ -320,6 +319,7 @@ public class TrainDispatchUi {
         +"\n                                                                      "
         + ANSI_RESET);
   }
+
   private void printExitPage() {
     System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "                                                                      "

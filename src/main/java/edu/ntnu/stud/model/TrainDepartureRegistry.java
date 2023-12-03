@@ -90,6 +90,10 @@ public class TrainDepartureRegistry {
     if (!trainDepartureMap.containsKey(trainNumber)) {
       throw new IllegalArgumentException("Train number does not exist");
     }
+    if (trainDepartureMap.values().stream()
+        .anyMatch(trainDeparture -> trainDeparture.getTrack() == track)) {
+      throw new IllegalArgumentException("Track is already assigned to another train");
+    }
     TrainDeparture trainDeparture = trainDepartureMap.get(trainNumber);
     trainDeparture.setTrack(track);
   }
