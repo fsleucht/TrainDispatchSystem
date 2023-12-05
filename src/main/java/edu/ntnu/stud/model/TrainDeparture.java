@@ -19,7 +19,9 @@ public class TrainDeparture {
   private LocalTime newDepartureTime;
 
   /**
-   * Constructs a TrainDeparture object.
+   * Constructs a TrainDeparture object. All parameters except track and delay are required when
+   * creating a new TrainDeparture object. Track and delay are set to -1 and 0 respectively by
+   * and default and can be changed later with the setTrack and setDelay methods.
    *
    * @param trainNumber the number of the train
    * @param hours the hour of departure
@@ -141,10 +143,10 @@ public class TrainDeparture {
   }
 
   /**
-   * Methode that sets the delay of the train.
+   * Methode that sets the delay of the train. Also sets the new departure time.
    *
-   * @param hours number of hours
-   * @param minutes number of minutes
+   * @param hours number of hours of the delay to be set
+   * @param minutes number of minutes of the delay to be set
    * @throws IllegalArgumentException if hours or minutes are not between 0 and 23/59
    */
   public void setDelay(int hours, int minutes) throws IllegalArgumentException {
