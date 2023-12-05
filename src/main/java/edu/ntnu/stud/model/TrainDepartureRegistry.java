@@ -42,12 +42,14 @@ public class TrainDepartureRegistry {
 
   /**
    * Searches for a TrainDeparture object with the given train number.
-   * If no TrainDeparture object is found, an empty Optional is returned.
    *
    * @param trainNumber the number of the train
    * @return an Optional containing the TrainDeparture object with the given train number.
    */
   public List<TrainDeparture> searchTrainDeparture(int trainNumber) {
+    if (!trainDepartureMap.containsKey(trainNumber)) {
+      throw new IllegalArgumentException("Train number does not exist");
+    }
     return trainDepartureMap.values().stream()
         .filter(trainDeparture -> trainDeparture.getTrainNumber() == trainNumber)
         .collect(Collectors.toList());
@@ -61,6 +63,13 @@ public class TrainDepartureRegistry {
    * @return a list of TrainDeparture objects with the given destination
    */
   public List<TrainDeparture> searchTrainDepartureDestination(String destination) {
+    if (destination == null || destination.isEmpty()) {
+      throw new IllegalArgumentException("Destination cannot be null or empty");
+    }
+    if (trainDepartureMap.values().stream()
+        .noneMatch(trainDeparture -> trainDeparture.getDestination().equals(destination))) {
+      throw new IllegalArgumentException("Destination does not exist");
+    }
     return trainDepartureMap.values().stream()
         .filter(trainDeparture -> trainDeparture.getDestination().equals(destination))
         .collect(Collectors.toList());
