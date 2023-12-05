@@ -15,6 +15,7 @@ public class TimeManagerTest {
     TimeManager.setCurrentTime(hours, minutes);
     assertEquals(hours, TimeManager.getCurrentTime().getHour());
     assertEquals(minutes, TimeManager.getCurrentTime().getMinute());
+    TimeManager.resetTime();
   }
 
   @Test
@@ -37,5 +38,15 @@ public class TimeManagerTest {
     int minutes = 30;
     TimeManager.setCurrentTime(hours, minutes);
     assertThrows(IllegalArgumentException.class, () -> TimeManager.setCurrentTime(hours - 1, minutes));
+    TimeManager.resetTime();
+  }
+
+  @Test
+  public void setCurrentTimeWithTimeAlreadySet() {
+    int hours = 12;
+    int minutes = 30;
+    TimeManager.setCurrentTime(hours, minutes);
+    assertThrows(IllegalArgumentException.class, () -> TimeManager.setCurrentTime(hours, minutes));
+    TimeManager.resetTime();
   }
 }

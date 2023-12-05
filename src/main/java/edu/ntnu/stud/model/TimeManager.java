@@ -34,6 +34,13 @@ public class TimeManager {
     if (setTime.isBefore(currentTime)) {
       throw new IllegalArgumentException("Time cannot be set before the current time");
     }
+    if (setTime.equals(currentTime)) {
+      throw new IllegalArgumentException("Time already set to " + currentTime);
+    }
     currentTime = setTime;
+  }
+
+  public static void resetTime() {
+    currentTime = LocalTime.of(0, 0);
   }
 }

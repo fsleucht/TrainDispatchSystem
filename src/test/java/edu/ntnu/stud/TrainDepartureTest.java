@@ -61,6 +61,7 @@ public class TrainDepartureTest {
 
     assertThrows(IllegalArgumentException.class, () -> new TrainDeparture(trainNumber, hours, minutes, line, destination));
   }
+
   @Test
   public void testConstructorInvalidTime() {
     int trainNumber = 30;
@@ -161,5 +162,4 @@ public class TrainDepartureTest {
     int delayMinutes = -1;
     assertThrows(IllegalArgumentException.class, () -> trainDeparture.setDelay(delayHours, delayMinutes));
   }
-
 }
