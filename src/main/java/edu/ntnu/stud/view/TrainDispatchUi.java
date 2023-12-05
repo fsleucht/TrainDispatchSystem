@@ -29,9 +29,6 @@ public class TrainDispatchUi {
   private static final String ANSI_BOLD = "\u001B[1m";
   private static final String ANSI_CROSSED_OUT = "\u001B[9m";
 
-  public TrainDispatchUi() {
-  }
-
   /**
    * Methode to start the UI.
    */
