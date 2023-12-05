@@ -5,6 +5,11 @@ import edu.ntnu.stud.model.TrainDeparture;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the TrainDeparture class. It has both positive and negative tests.
+ * The method names explain what is being tested.
+ * <p>The test where created with help form GitHub Copilot.
+ */
 public class TrainDepartureTest {
 
   @Test

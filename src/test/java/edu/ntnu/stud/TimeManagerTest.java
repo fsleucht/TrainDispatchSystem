@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * This class tests the TimeManager class. It has both positive and negative tests.
+ * The method names explain what is being tested.
+ * <p>The test where created with help form GitHub Copilot.
+ */
 public class TimeManagerTest {
 
   @Test
