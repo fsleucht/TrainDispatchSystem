@@ -8,6 +8,14 @@ import java.util.Scanner;
 
 /**
  * This is the UI class for the train dispatch application.
+ *
+ * <p>It creates a menu for the user to interact with the application. The menu is created to be
+ * used in a terminal window. It allows users to choose from several options using the keyboard.
+ * The main menu and the pages that can be accessed from the main menu are created to look the
+ * same way, with the name of the page and the current time at the top of the page.
+ *
+ * <p>The input fetched using the Scanner class.
+ * It also initializes the registry with some default train departures.
  */
 public class TrainDispatchUi {
   private TrainDepartureRegistry registry;
@@ -31,6 +39,15 @@ public class TrainDispatchUi {
 
   /**
    * Methode to start the UI.
+   *
+   * <p>It prints the start page and waits for the user to press enter. Then it prints the main
+   * menu and waits for the user to choose an option. The option is chosen by entering a number
+   * between 1 and 8. If the user enters an invalid option, the menu is printed again.
+   *
+   * <p>When the user chooses an option, the corresponding methode is called. After the methode
+   * is finished, the main menu is printed again.
+   *
+   * <p>The user can exit the application by entering 8. Then the exit page is printed.
    */
   public void start() {
     printStartPage();
@@ -56,6 +73,9 @@ public class TrainDispatchUi {
 
   /**
    * Methode to initialize the UI.
+   *
+   * <p>It creates a new Scanner object and a new TrainDepartureRegistry object.
+   * It also adds some default train departures to the registry.
    */
   public void init() {
     this.scanner = new Scanner(System.in);
@@ -68,6 +88,10 @@ public class TrainDispatchUi {
     this.registry.addTrainDeparture(506, 22, 42, "1", "Trondheim");
   }
 
+  /**
+   * Methode that prints the main menu. The numbers in square brackets are the options the user can
+   * choose from. The current time is also printed at the top of the page.
+   */
   private void printMenu() {
     System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "   Main menu                                    Current time: "
@@ -84,10 +108,16 @@ public class TrainDispatchUi {
   }
 
   /**
-   * Methode that prints a single train departure.
+   * Methode that returns a formatted string with the train departure information.
    *
-   * @param trainDeparture the train departure to print
-   * @return a string representation of the train departure
+   * <p>If the train departure has a delay, the departure time is crossed out and the new
+   * departure time is added next to it and the delay is added in the delay column.
+   *
+   * <p>If the train departure has been assigned a track, the track number is added in the
+   * track column.
+   *
+   * @param trainDeparture the train departure to be formatted
+   * @return a formatted string with the train departure information
    */
   private String formatTrainDeparture(TrainDeparture trainDeparture) {
     String format = "%-6s %-9s | %-6s | %-8s | %-13s | %-7s | %-5s";
@@ -110,6 +140,16 @@ public class TrainDispatchUi {
         delay, track);
   }
 
+  /**
+   * Methode that prints a list of train departures as a table. The table has columns for
+   * departure time, line, train number, destination, delay and track.
+   *
+   * <p>Is used when printing the departure table and when searching for train departures.
+   * First the column names are printed. Then each train departure is printed on a new line
+   * using the formatTrainDeparture methode.
+   *
+   * @param departureList the list of train departures to be printed
+   */
   private void printDepartures(List<TrainDeparture> departureList) {
     System.out.println(ANSI_BOLD + "Departure time" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Line" + ANSI_RESET + "   | "
@@ -123,8 +163,10 @@ public class TrainDispatchUi {
   }
 
   /**
-   * Methode that prints the departure table.
+   * Methode that prints the departure table. The departure table is a list of all train departures
+   * in the registry sorted by departure time.
    *
+   * <p>Lets the user go back to the main menu by pressing enter.
    */
   private void printDepartureTable() {
     System.out.println("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
@@ -135,6 +177,14 @@ public class TrainDispatchUi {
     scanner.nextLine();
   }
 
+  /**
+   * Methode that lets the user add a train departure to the registry. The user is asked to enter
+   * the parameters for the train departure. If the user enters invalid parameters, the methode
+   * prints an error message.
+   *
+   * <p>When the train departure is added or has failed to be added, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void addTrainDeparture() {
     boolean exit = false;
     while (!exit) {
@@ -167,6 +217,14 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that lets the user assign a track to a train departure. The user is asked to enter
+   * the train number and the track number. If the user enters invalid parameters, the methode
+   * prints an error message.
+   *
+   * <p>When the track is assigned or has failed to be assigned, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void assignTrack() {
     boolean exit = false;
     while (!exit) {
@@ -193,6 +251,14 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that lets the user set a delay to a train departure. The user is asked to enter
+   * the train number and the delay. If the user enters invalid parameters, the methode
+   * prints an error message.
+   *
+   * <p>When the delay is set or has failed to be set, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void setDelay() {
     boolean exit = false;
     while (!exit) {
@@ -222,6 +288,14 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that lets the user search for a train departure by train number. The user is asked to
+   * enter the train number. If the user enters invalid parameters or the train number does not
+   * exist in the registry, the methode prints an error message.
+   *
+   * <p>When the train departure is found or has failed to be found, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void searchTrainDepartureNumber() {
     boolean exit = false;
     while (!exit) {
@@ -245,6 +319,14 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that lets the user search for train departures by destination. The user is asked to
+   * enter the destination. If the user enters invalid parameters or the destination does not
+   * exist in the registry, the methode prints an error message.
+   *
+   * <p>When the train departures are found or has failed to be found, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void searchTrainDepartureDestination() {
     boolean exit = false;
     while (!exit) {
@@ -268,6 +350,14 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that lets the user update the current time. The user is asked to enter the hours and
+   * minutes of the new time. If the user enters invalid parameters or the time is set before or to
+   * the current time, the methode prints an error message.
+   *
+   * <p>When the time is updated or has failed to be updated, the user is asked if they
+   * want to try again or go back to the main menu.
+   */
   private void updateTime() {
     boolean exit = false;
     while (!exit) {
@@ -296,6 +386,9 @@ public class TrainDispatchUi {
     }
   }
 
+  /**
+   * Methode that prints the start page.
+   */
   private void printStartPage() {
     System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "                                                                      "
@@ -308,6 +401,9 @@ public class TrainDispatchUi {
         + ANSI_RESET);
   }
 
+  /**
+   * Methode that prints the exit page.
+   */
   private void printExitPage() {
     System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "                                                                      "
