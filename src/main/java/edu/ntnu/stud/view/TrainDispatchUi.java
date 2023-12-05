@@ -40,6 +40,7 @@ public class TrainDispatchUi {
     scanner.nextLine();
     boolean exit = false;
     while (!exit) {
+      registry.removePassedTrainDepartures();
       printMenu();
       String choice = scanner.nextLine();
       switch (choice) {
@@ -93,7 +94,7 @@ public class TrainDispatchUi {
    * @return a string representation of the train departure
    */
   private String formatTrainDeparture(TrainDeparture trainDeparture) {
-    String format = "%-8s | %-6s %-9s | %-6s | %-13s | %-7s | %-5s";
+    String format = "%-6s %-9s | %-6s | %-8s | %-13s | %-7s | %-5s";
     String trainNumber = String.valueOf(trainDeparture.getTrainNumber());
     String departureTime = String.valueOf(trainDeparture.getDepartureTime());
     String newDepartureTime = "";
@@ -109,17 +110,17 @@ public class TrainDispatchUi {
       newDepartureTime = String.valueOf(trainDeparture.getNewDepartureTime());
       departureTime = ANSI_CROSSED_OUT + departureTime + ANSI_RESET + " ";
     }
-    return String.format(format, trainNumber, departureTime, newDepartureTime, line, destination,
-        track, delay);
+    return String.format(format, departureTime, newDepartureTime, line, trainNumber, destination,
+        delay, track);
   }
 
   private void printDepartures(List<TrainDeparture> departureList) {
-    System.out.println(ANSI_BOLD + "Number" + ANSI_RESET + "   | "
-        + ANSI_BOLD + "Departure Time" + ANSI_RESET + "   | "
+    System.out.println(ANSI_BOLD + "Departure time" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Line" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Number" + ANSI_RESET + "   | "
         + ANSI_BOLD + "Destination" + ANSI_RESET + "   | "
-        + ANSI_BOLD + "Track" + ANSI_RESET + "   | "
-        + ANSI_BOLD + "Delay" + ANSI_RESET);
+        + ANSI_BOLD + "Delay" + ANSI_RESET + "   | "
+        + ANSI_BOLD + "Track" + ANSI_RESET);
     for (TrainDeparture trainDeparture : departureList) {
       System.out.println(formatTrainDeparture(trainDeparture));
     }
