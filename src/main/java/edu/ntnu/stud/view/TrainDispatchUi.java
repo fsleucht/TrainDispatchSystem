@@ -37,7 +37,6 @@ public class TrainDispatchUi {
     scanner.nextLine();
     boolean exit = false;
     while (!exit) {
-      registry.removePassedTrainDepartures();
       printMenu();
       String choice = scanner.nextLine();
       switch (choice) {
@@ -283,6 +282,7 @@ public class TrainDispatchUi {
         int minutes = Integer.parseInt(scanner.nextLine());
         TimeManager.setCurrentTime(hours, minutes);
         System.out.println(ANSI_BOLD + "\nTime updated." + ANSI_RESET);
+        registry.removePassedTrainDepartures();
       } catch (IllegalArgumentException e) {
         System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"
             + ANSI_RESET + e.getMessage());
