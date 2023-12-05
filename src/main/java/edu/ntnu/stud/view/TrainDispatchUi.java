@@ -207,7 +207,7 @@ public class TrainDispatchUi {
         int hours = hoursString.isEmpty() ? 0 : Integer.parseInt(hoursString);
         System.out.print("Minutes: ");
         int minutes = Integer.parseInt(scanner.nextLine());
-        this.registry.assignDelay(trainNumber, hours, minutes);
+        this.registry.setDelay(trainNumber, hours, minutes);
         System.out.println(ANSI_BOLD + "\nDelay added." + ANSI_RESET);
       } catch (IllegalArgumentException e) {
         System.out.println(ANSI_BOLD + "\nFailed for the following reason:\n"

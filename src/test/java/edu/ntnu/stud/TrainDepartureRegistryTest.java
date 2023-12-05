@@ -120,7 +120,7 @@ public class TrainDepartureRegistryTest {
   public void testAssignDelay() {
     TrainDepartureRegistry registry = new TrainDepartureRegistry();
     registry.addTrainDeparture(30, 12, 20, "F4", "Bergen");
-    registry.assignDelay(30, 1, 0);
+    registry.setDelay(30, 1, 0);
     assertEquals(1, registry.getTrainDepartureSorted().get(0).getDelay().getHour());
     assertEquals(0, registry.getTrainDepartureSorted().get(0).getDelay().getMinute());
   }
@@ -128,6 +128,6 @@ public class TrainDepartureRegistryTest {
   @Test
   public void testAssignDelayTrainNumberDoesNotExist() {
     TrainDepartureRegistry registry = new TrainDepartureRegistry();
-    assertThrows(IllegalArgumentException.class, () -> registry.assignDelay(30, 1, 0));
+    assertThrows(IllegalArgumentException.class, () -> registry.setDelay(30, 1, 0));
   }
 }
