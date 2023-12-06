@@ -3,9 +3,9 @@ STUDENT NAME = Florian Simon Xavier Leucht
 STUDENT ID = 10055
 
 ## Project description
-The project is designed to be a train dispatch system. The system is designed to be used on one station, in the duration
-of one day. The system is presented to the user as a menu in the terminal. From here the person responsible for the
-managing train departures can do the following:
+The project is designed to be a train dispatch system. The system is designed to be used on one station, during one day. 
+The system is presented to the user as a menu in the terminal. From here the person responsible for managing
+train departures can do the following:
 - Show a departure table
 - Add a departure to the system
 - Assign a train to a departure
