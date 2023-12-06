@@ -14,7 +14,7 @@ import java.util.Scanner;
  * The main menu and the pages that can be accessed from the main menu are created to look the
  * same way, with the name of the page and the current time at the top of the page.
  *
- * <p>The input fetched using the Scanner class.
+ * <p>The user input is fetched using the Scanner class.
  * It also initializes the registry with some default train departures.
  */
 public class TrainDispatchUi {
