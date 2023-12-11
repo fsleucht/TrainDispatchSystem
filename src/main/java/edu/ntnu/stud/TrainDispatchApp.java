@@ -7,7 +7,8 @@ import edu.ntnu.stud.view.TrainDispatchUi;
  */
 public class TrainDispatchApp {
   /**
-   * Main method for the application. Creates a new TrainDispatchUi object and calls the init and start methods.
+   * Main method for the application.
+   * Creates a new TrainDispatchUi object and calls the init and start methods.
    *
    * @param args the command line arguments
    */
