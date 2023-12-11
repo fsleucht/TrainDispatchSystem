@@ -395,7 +395,7 @@ public class TrainDispatchUi {
     System.out.print("\n\n\n\n\n\n\n\n\n\n" + ANSI_UNDERLINE
         + "                                                                      "
         + "\n\n\n\n" + ANSI_RESET + ANSI_BOLD
-        + "\n                      Train Dispatch System v0.1                      "
+        + "\n                      Train Dispatch System v1.0                      "
         + ANSI_RESET
         + "\n\n\n\n                      Press [Enter] to continue                       "
         + ANSI_UNDERLINE
