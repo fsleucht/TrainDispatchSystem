@@ -7,6 +7,8 @@ import java.time.LocalTime;
  * as a LocalTime object and has methods for getting and setting the current time.
  * The time is stored as a static variable, so the same time is used throughout the program.
  * The current time is set to 00:00 by default.
+ *
+ * <p>Created with help from Copilot.
  */
 public class TimeManager {
   private static LocalTime currentTime = LocalTime.of(0, 0);
@@ -21,7 +23,7 @@ public class TimeManager {
   }
 
   /**
-   * Methode that sets the current time. Hours and minutes are given as parameters.
+   * Method that sets the current time. Hours and minutes are given as parameters.
    * Time cannot be set before the current time or to the current time.
    * The time must be set using the 24-hour clock.
    *
@@ -47,7 +49,7 @@ public class TimeManager {
   }
 
   /**
-   * Methode that resets the current time. Only used for testing.
+   * Method that resets the current time. Only used for testing.
    */
   public static void resetTime() {
     currentTime = LocalTime.of(0, 0);

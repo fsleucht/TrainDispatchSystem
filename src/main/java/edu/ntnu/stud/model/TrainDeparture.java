@@ -8,6 +8,8 @@ import java.time.LocalTime;
  * <p>It stores information about
  * the train number, departure time, line, destination, track and delay.
  * Track and delay can be set after the object is created.
+ *
+ * <p>Created with help from Copilot.
  */
 public class TrainDeparture {
   private final int trainNumber;
@@ -130,7 +132,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Methode that sets the track of the train.
+   * Method that sets the track of the train.
    *
    * @param track the track number of the train
    * @throws IllegalArgumentException if track is not -1 or a positive number
@@ -143,7 +145,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Methode that sets the delay of the train. Also sets the new departure time.
+   * Method that sets the delay of the train. Also sets the new departure time.
    *
    * @param hours number of hours of the delay to be set
    * @param minutes number of minutes of the delay to be set

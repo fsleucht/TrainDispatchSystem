@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
  * It has methods for adding new departures, searching for departures objects by
  * train number or destination, removing passed departures, getting a sorted list of
  * all departures as well as assigning track and delay to a departure.
+ *
+ * <p>Created with help from Copilot.
  */
 public class TrainDepartureRegistry {
   private final HashMap<Integer, TrainDeparture> trainDepartureMap;
