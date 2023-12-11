@@ -97,7 +97,7 @@ public class TrainDepartureRegistry {
    */
   public void removePassedTrainDepartures() {
     trainDepartureMap.values().removeIf(
-        trainDeparture -> trainDeparture.getDepartureTime().isBefore(TimeManager.getCurrentTime()));
+        trainDeparture -> trainDeparture.getNewDepartureTime().isBefore(TimeManager.getCurrentTime()));
   }
 
   /**
